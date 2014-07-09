@@ -14,7 +14,7 @@
     ;
 
 
-    if(!this instanceof LinkedList) return new LinkedList();
+    if(!(this instanceof LinkedList)) return new LinkedList();
 
     /**
     * Private Node Constructor for the LinkedList.
@@ -47,15 +47,16 @@
     /**
     * Privileged method for inserting a node into the list.
     *
+    * @param {Number} idx The index to insert the data at in the list.
     * @param {*} data The data item to insert into the list.
-    * @param {Number} n Position to insert the data item, from [1 - size] inclusive.
     */
-    this.insert = function(data, n) {
+    this.insert = function(idx, data) {
       var cur = head.next
         , pre = undefined
+        , n   = parseInt(idx, 10)
       ;
 
-      if(n < 1 || n > (size + 1)) throw new Error(OUT_OF_RANGE_ERR);
+      if(isNaN(n) || n < 1 || n > (size + 1)) throw new Error(OUT_OF_RANGE_ERR);
       else {
         size++;
         if(n === 1) {
@@ -71,10 +72,58 @@
       }
     };
 
+    /**
+     * Privileged method to remove the idx-th Node from the list.
+     *
+     * @param {Number} idx The index of the node to remove from the list.
+     */
+    this.remove = function(idx) {
+      var cur = undefined
+        , pre = undefined
+        , n   = parseInt(idx, 10)
+      ;
 
-    this.remove = function(n) {
-      if(n < 1 || n > (size + 1)) throw new Error(OUT_OF_RANGE_ERR);
-      
+      if(isNaN(n) || n < 1 || n > size) throw new Error(OUT_OF_RANGE_ERR);
+      else {
+        size--;
+        if(n === 1) {
+          cur = head.next;
+          head = { next: cur.next };
+        } else {
+          pre = find(n - 1);
+          cur = pre.next;
+          pre.next = cur.next;
+        }
+        cur = null;
+      }
+    };
+
+    /**
+     * Privileged method to return the data item in the idx-th list Node. Note, this method
+     * returns only the data member of the Node, not the entire Node.
+     *
+     * @param {Number} idx The index of the node to get the data item for.
+     * @returns {*} The idx-th Node's data member.
+     */
+    this.get = function(idx) {
+      var cur = undefined
+        , n   = parseInt(idx, 10)
+      ;
+
+      if(isNaN(n) || n < 1 || n > size) throw new Error(OUT_OF_RANGE_ERR);
+      else {
+        cur = find(n);
+        return cur.data;
+      }
+    };
+
+    /**
+     * Privileged method to get the number of nodes currently in the list.
+     *
+     * @returns {Number}
+     */
+    this.size = function() {
+      return size;
     };
 
     this.dump = function() {
@@ -84,10 +133,6 @@
         console.log(cur.data);
         cur = cur.next;
       }
-    };
-
-    this.size = function() {
-      return size;
     };
   }
 
