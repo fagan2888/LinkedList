@@ -1,0 +1,10 @@
+{
+  "name": "LinkedList",
+  "description": "A linked list implemented in JavaScript",
+  "version": "0.0.0",
+  "private": true,
+  "devDependencies": {
+    "mocha": "~1.20.1",
+    "chai": "~1.9.1"
+  }
+}
