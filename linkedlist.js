@@ -7,8 +7,7 @@
 }(this, function() {
 
   function LinkedList() {
-    var me 	              = this
-      , head              = { next: null }
+    var head              = { next: null }
       , size              = 0
       , OUT_OF_RANGE_ERR  = 'Supplied index is out of range.'
     ;
